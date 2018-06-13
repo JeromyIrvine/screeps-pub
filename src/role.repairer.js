@@ -13,7 +13,7 @@ var roleRepairer = {
 		}
 		if (!creep.memory.repairing && creep.carry.energy == creep.carryCapacity) {
 			creep.memory.repairing = true;
-			creep.say('🚧 build');
+			creep.say('🚧 repair');
 		}
 
 		if (creep.memory.repairing) {

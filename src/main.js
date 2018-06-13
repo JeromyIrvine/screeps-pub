@@ -11,7 +11,7 @@ module.exports.loop = function () {
 
     var hiring = [
         { role: "harvester", targetPop: 3 },
-        { role: "builder", targetPop: 3 },
+        { role: "builder", targetPop: 2 },
         { role: "upgrader", targetPop: 4 },
         { role: "repairer", targetPop: 2 }
     ];

@@ -13,3 +13,4 @@
 ## TODO
 
 - Add container support for harvester
+- Add task-locking for workers - don't switch away from an in-range task just because another one comes up
