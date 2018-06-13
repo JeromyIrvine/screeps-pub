@@ -41,6 +41,15 @@ var roleHarvester = {
                 if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
+            } else {
+                var containers = creep.room.find(FIND_STRUCTURES, {
+                    filter: c => c.structureType == STRUCTURE_CONTAINER && structure.store.energy < structure.storeCapacity                    
+                });
+                if (containers.length > 0) {
+                    if (creep.transfer(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(containers[0]);
+                    }
+                }
             }
         }
 	}
