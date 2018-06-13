@@ -1,0 +1,8 @@
+{
+  "name": "psychoticotter-screeps",
+  "version": "1.0.0",
+  "dependencies": {
+    "grunt": "^1.0.3",
+    "grunt-screeps": "^1.4.0"
+  }
+}
