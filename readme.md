@@ -13,8 +13,8 @@
 ## TODO
 
 - **Tower code**
+- LD Harvesters, have a home room and work room. Do not pick up dropped energy in home room or less than a certain threshold. Prioritize carry, then move, then work.
 - Workers should task-lock when in range of task until done - no switching because a 'higher priority' task came up. This applies both to work and energy collection.
 - Harvesters should only pursue dropped energy if they are not already harvesting a source (task locking for workers should solve this.)
 - Only one harvester should pursue a dropped energy - they should not all divert
-- LD Harvesters, have a home room and work room. Do not pick up dropped energy in home room or less than a certain threshold. Prioritize carry, then move, then work.
 - Harvesters should also looks for tombstones and grab that energy

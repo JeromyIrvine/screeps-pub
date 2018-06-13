@@ -7,20 +7,23 @@ var roleRepairer = {
 	/** @param {Creep} creep **/
 	run: function (creep) {
 
-		if (creep.memory.repairing && creep.carry.energy == 0) {
-			creep.memory.repairing = false;
+		if (creep.memory.working && creep.carry.energy == 0) {
+			creep.memory.working = false;
 			creep.say('🔄 harvest');
 		}
-		if (!creep.memory.repairing && creep.carry.energy == creep.carryCapacity) {
-			creep.memory.repairing = true;
+		if (!creep.memory.working && creep.carry.energy == creep.carryCapacity) {
+			creep.memory.working = true;
 			creep.say('🚧 repair');
 		}
 
-		if (creep.memory.repairing) {
+		if (creep.memory.working) {
 			let target = undefined;
 
 			if (creep.memory.targetId) {
 				target = Game.getObjectById(creep.memory.targetId);
+				if (target.hits >= target.hitsMax) {
+					target = undefined;
+				}
 			}
 
 			if (!target) {
