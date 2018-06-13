@@ -10,7 +10,7 @@ module.exports.loop = function () {
     garbageCollectDeadCreeps();
 
     var hiring = [
-        { role: "harvester", targetPop: 4 },
+        { role: "harvester", targetPop: 5 },
         { role: "builder", targetPop: 1 },
         { role: "upgrader", targetPop: 4 },
         { role: "repairer", targetPop: 1 }
