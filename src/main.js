@@ -17,6 +17,10 @@ module.exports.loop = function () {
     ];
 
     var bodies = [
+        { energy: 800, body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE] },
+        { energy: 700, body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE] },
+        { energy: 650, body: [WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE] },
+        { energy: 600, body: [WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE] },
         { energy: 550, body: [WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE] },
         { energy: 450, body: [WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE] },
         { energy: 400, body: [WORK,WORK,CARRY,CARRY,MOVE,MOVE] },

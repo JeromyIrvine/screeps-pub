@@ -12,5 +12,7 @@
 
 ## TODO
 
-- Add container support for harvester
-- Add task-locking for workers - don't switch away from an in-range task just because another one comes up
+- Non-harvester workers should draw energy from containers if available
+- Harvesters should only pursue dropped energy if they are not already harvesting a source
+- Only one harvester should pursue a dropped energy - they should not all divert
+- Workers should task-lock when in range of task until done - no switching because a 'higher priority' task came up
