@@ -10,8 +10,8 @@ module.exports.loop = function () {
     garbageCollectDeadCreeps();
 
     var hiring = [
-        { role: "harvester", targetPop: 3 },
-        { role: "builder", targetPop: 2 },
+        { role: "harvester", targetPop: 2 },
+        { role: "builder", targetPop: 1 },
         { role: "upgrader", targetPop: 4 },
         { role: "repairer", targetPop: 2 }
     ];
@@ -53,6 +53,14 @@ module.exports.loop = function () {
                 console.log(`Spawned new ${ct.role} creep: ${name}`);
                 break;
             }
+        }
+    }
+
+    let towers = spawn.room.find(FIND_MY_STRUCTURES, { filter: s => s.structureType == STRUCTURE_TOWER });
+    for (let tower of towers) {
+        let target = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+        if (target) {
+            tower.attack(target);
         }
     }
 
