@@ -12,7 +12,8 @@
 
 ## TODO
 
-- Non-harvester workers should draw energy from containers if available
+- **Tower code**
 - Harvesters should only pursue dropped energy if they are not already harvesting a source
 - Only one harvester should pursue a dropped energy - they should not all divert
-- Workers should task-lock when in range of task until done - no switching because a 'higher priority' task came up
+- Harvesters should also looks for tombstones and grab that energy
+- Workers should task-lock when in range of task until done - no switching because a 'higher priority' task came up. This applies both to work and energy collection.
