@@ -17,16 +17,27 @@ var roleRepairer = {
 		}
 
 		if (creep.memory.repairing) {
+			let target = undefined;
 
-			var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-				filter: s => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL
-			});
-			if (structure) {
-				if (creep.repair(structure) == ERR_NOT_IN_RANGE) {
-					creep.moveTo(structure);
-				}
-			} else {
+			if (creep.memory.targetId) {
+				target = Game.getObjectById(creep.memory.targetId);
+			}
+
+			if (!target) {
+				target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+					filter: s => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL
+				});
+				creep.memory.targetId = target.id;
+			}
+
+			if (!target) {
+				creep.say("bu");
 				roleBuilder.run(creep);
+				return;
+			}
+
+			if (creep.repair(target) == ERR_NOT_IN_RANGE) {
+				creep.moveTo(target);
 			}
 		} else {
 			var containers = creep.room.find(FIND_STRUCTURES, {

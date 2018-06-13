@@ -10,14 +10,14 @@ module.exports.loop = function () {
     garbageCollectDeadCreeps();
 
     var hiring = [
-        { role: "harvester", targetPop: 2 },
+        { role: "harvester", targetPop: 4 },
         { role: "builder", targetPop: 1 },
         { role: "upgrader", targetPop: 4 },
-        { role: "repairer", targetPop: 2 }
+        { role: "repairer", targetPop: 1 }
     ];
 
     var bodies = [
-        { energy: 800, body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE] },
+        { energy: 800, body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE] },
         { energy: 750, body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE] },
         { energy: 700, body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE] },
         { energy: 650, body: [WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE] },
