@@ -45,10 +45,10 @@ var roleRepairer = {
 				creep.moveTo(target);
 			}
 		} else {
-			var containers = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+			var container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
 				filter: c => (c.structureType == STRUCTURE_CONTAINER || c.structureType == STRUCTURE_STORAGE) && c.store.energy >= 50
 			});
-			if (containers) {
+			if (container) {
 				if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 					creep.moveTo(container);
 				}
