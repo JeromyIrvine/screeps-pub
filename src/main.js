@@ -10,9 +10,9 @@ module.exports.loop = function () {
     garbageCollect();
 
     var hiring = [
-        { role: "harvester", targetPop: 4 },
-        { role: "builder", targetPop: 2 },
-        { role: "upgrader", targetPop: 3 },
+        { role: "harvester", targetPop: 2 },
+        { role: "builder", targetPop: 1 },
+        { role: "upgrader", targetPop: 2 },
         { role: "repairer", targetPop: 1 }
     ];
 

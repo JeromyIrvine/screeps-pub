@@ -21,6 +21,7 @@
 - [x] Storage support for harvesters
 - [ ] Storage awareness for workers
 - [ ] Add Wall Repairers
+- [ ] Advanced worker management: upgraders, builders, and repairers are all *workers* who can be reassigned based on jobs available. New workes should only be built if the target population for a given job can't be filled.
 
 ## Roles
 

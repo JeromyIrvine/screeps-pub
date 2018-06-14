@@ -42,6 +42,7 @@ declare const FIND_MY_CONSTRUCTION_SITES: 114;
 declare const FIND_HOSTILE_CONSTRUCTION_SITES: 115;
 declare const FIND_MINERALS: 116;
 declare const FIND_NUKES: 117;
+declare const FIND_TOMBSTONES: 118;
 declare const TOP: 1;
 declare const TOP_RIGHT: 2;
 declare const RIGHT: 3;
