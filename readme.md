@@ -12,7 +12,7 @@
 
 ## TODO
 
-- [ ] LD Harvesters, have a home room and work room. Do not pick up dropped energy in home room or less than a certain threshold. Prioritize carry, then move, then work.
+- [x] LD Harvesters, have a home room and work room. Do not pick up dropped energy in home room or less than a certain threshold. Prioritize carry, then move, then work.
 - [ ] Workers should task-lock when in range of task until done - no switching because a 'higher priority' task came up. This applies both to work and energy collection.
 - [ ] Harvesters should only pursue dropped energy if they are not already harvesting a source
 - [x] Only one harvester should pursue a dropped energy - they should not all divert
@@ -21,7 +21,7 @@
 - [x] Storage support for harvesters
 - [ ] Storage awareness for workers
 - [ ] Add Wall Repairers
-- [ ] Advanced worker management: upgraders, builders, and repairers are all *workers* who can be reassigned based on jobs available. New workes should only be built if the target population for a given job can't be filled.
+- [ ] Advanced worker management: upgraders, builders, and repairers are all *workers* who can be reassigned based on jobs available. New workers should only be built if the target population for a given job can't be filled.
 
 ## Roles
 
@@ -48,6 +48,6 @@ they will fall back to an Upgrader role.
 Repairers use energy from containers or sources to repair structures. If there is nothing to repair,
 they will fall back to a Builder role, and if nothing to build, to an Upgrader role.
 
-## Wall Repairer *not yet coded*
+### Wall Repairer *not yet coded*
 
-Wall repairers are a specialize unit that repair walls and ramparts.
+Wall repairers are a specialized unit that repair walls and ramparts.

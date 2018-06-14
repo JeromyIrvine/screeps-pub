@@ -4,6 +4,7 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepairer = require("role.repairer");
+var roleRemoteHarvester = require("role.remoteHarvester");
 
 module.exports.loop = function () {
 
@@ -17,20 +18,20 @@ module.exports.loop = function () {
     ];
 
     var bodies = [
-        { energy: 1300, body: [WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE] },
-        { energy: 1200, body: [WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE] },
-        { energy: 1100, body: [WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE] },
-        { energy: 1000, body: [WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE] },
-        { energy: 900, body: [WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE] },
-        { energy: 800, body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE] },
-        { energy: 750, body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE] },
-        { energy: 700, body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE] },
-        { energy: 650, body: [WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE] },
-        { energy: 600, body: [WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE] },
-        { energy: 550, body: [WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE] },
-        { energy: 450, body: [WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE] },
-        { energy: 400, body: [WORK,WORK,CARRY,CARRY,MOVE,MOVE] },
-        { energy: 300, body: [WORK,CARRY,CARRY,MOVE,MOVE] }
+        { energy: 1300, body: [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE] },
+        { energy: 1200, body: [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE] },
+        { energy: 1100, body: [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE] },
+        { energy: 1000, body: [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE] },
+        { energy: 900, body: [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE] },
+        { energy: 800, body: [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE] },
+        { energy: 750, body: [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE] },
+        { energy: 700, body: [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE] },
+        { energy: 650, body: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE] },
+        { energy: 600, body: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE] },
+        { energy: 550, body: [WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE] },
+        { energy: 450, body: [WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE] },
+        { energy: 400, body: [WORK, WORK, CARRY, CARRY, MOVE, MOVE] },
+        { energy: 300, body: [WORK, CARRY, CARRY, MOVE, MOVE] }
     ];
 
     let spawn = Game.spawns.Spawn1;
@@ -69,19 +70,22 @@ module.exports.loop = function () {
         }
     }
 
-    for(var name in Game.creeps) {
+    for (var name in Game.creeps) {
         var creep = Game.creeps[name];
-        if(creep.memory.role == 'harvester') {
+        if (creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
         }
-        if(creep.memory.role == 'upgrader') {
+        if (creep.memory.role == 'upgrader') {
             roleUpgrader.run(creep);
         }
-        if(creep.memory.role == 'builder') {
+        if (creep.memory.role == 'builder') {
             roleBuilder.run(creep);
         }
         if (creep.memory.role == "repairer") {
             roleRepairer.run(creep);
+        }
+        if (creep.memory.role == "remoteHarvester") {
+            roleRemoteHarvester.run(creep);
         }
     }
 }
@@ -98,3 +102,18 @@ function garbageCollect() {
         }
     };
 }
+
+StructureSpawn.prototype.spawnRemoteHarvester = 
+    function (homeRoom, workRoom) {
+        let role = "remoteHarvester";
+        let bodyDesign = [WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
+
+        if (this.room.energyAvailable >= 1100) {
+            let name = `rh${Memory.creepCount}`;
+            let creep = this.spawnCreep(bodyDesign, name, { memory: { role, homeRoom, workRoom } });
+            if (creep == OK) {
+                Memory.creepCount++;
+                console.log(`Spawned new ${role} creep: ${name}`);
+            }
+        }
+    };
