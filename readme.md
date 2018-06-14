@@ -18,3 +18,35 @@
 - [x] Only one harvester should pursue a dropped energy - they should not all divert
 - [x] Harvesters should also looks for tombstones and grab that energy
 - [ ] Advanced tower logic: repair and heal
+- [x] Storage support for harvesters
+- [ ] Storage awareness for workers
+- [ ] Add Wall Repairers
+
+## Roles
+
+### Harvester
+
+Harvests energy sources and brings them to the spawn, extensions, storage, and containers.
+Harvesters also scavenge tombstones and dropped energy sources > 40 in size.
+
+### Long Distance Harvester *not yet coded*
+
+LDH's harvest energy from other rooms and import it.
+
+### Upgrader
+
+Upgraders use energy from containers or sources to upgrade the control point.
+
+### Builder
+
+Builders use energy from containers or sources to build structures. If there is nothing to build,
+they will fall back to an Upgrader role.
+
+### Repairer
+
+Repairers use energy from containers or sources to repair structures. If there is nothing to repair,
+they will fall back to a Builder role, and if nothing to build, to an Upgrader role.
+
+## Wall Repairer *not yet coded*
+
+Wall repairers are a specialize unit that repair walls and ramparts.

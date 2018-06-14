@@ -10,13 +10,18 @@ module.exports.loop = function () {
     garbageCollect();
 
     var hiring = [
-        { role: "harvester", targetPop: 5 },
-        { role: "builder", targetPop: 1 },
-        { role: "upgrader", targetPop: 4 },
+        { role: "harvester", targetPop: 4 },
+        { role: "builder", targetPop: 2 },
+        { role: "upgrader", targetPop: 3 },
         { role: "repairer", targetPop: 1 }
     ];
 
     var bodies = [
+        { energy: 1300, body: [WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE] },
+        { energy: 1200, body: [WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE] },
+        { energy: 1100, body: [WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE] },
+        { energy: 1000, body: [WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE] },
+        { energy: 900, body: [WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE] },
         { energy: 800, body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE] },
         { energy: 750, body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE] },
         { energy: 700, body: [WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE] },
