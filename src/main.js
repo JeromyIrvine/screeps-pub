@@ -7,7 +7,7 @@ var roleRepairer = require("role.repairer");
 
 module.exports.loop = function () {
 
-    garbageCollectDeadCreeps();
+    garbageCollect();
 
     var hiring = [
         { role: "harvester", targetPop: 5 },
@@ -81,10 +81,15 @@ module.exports.loop = function () {
     }
 }
 
-function garbageCollectDeadCreeps() {
+function garbageCollect() {
     for (let name in Memory.creeps) {
         if (!Game.creeps[name]) {
             delete Memory.creeps[name];
         }
     }
+    for (let name in Memory) {
+        if (name.startsWith("dropped") && !Game.getObjectById(name)) {
+            delete Memory[name];
+        }
+    };
 }
