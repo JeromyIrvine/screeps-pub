@@ -19,7 +19,7 @@
 - [x] Harvesters should also looks for tombstones and grab that energy
 - [ ] Advanced tower logic: repair and heal
 - [x] Storage support for harvesters
-- [ ] Storage awareness for workers
+- [x] Storage awareness for workers
 - [ ] Add Wall Repairers
 - [ ] Advanced worker management: upgraders, builders, and repairers are all *workers* who can be reassigned based on jobs available. New workers should only be built if the target population for a given job can't be filled.
 
