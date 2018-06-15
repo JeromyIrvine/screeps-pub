@@ -5,6 +5,7 @@ var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepairer = require("role.repairer");
 var roleRemoteHarvester = require("role.remoteHarvester");
+var roleCombatEngineer = require("role.combatEngineer");
 
 module.exports.loop = function () {
 
@@ -17,6 +18,7 @@ module.exports.loop = function () {
         { role: "builder", targetPop: 1 },
         { role: "upgrader", targetPop: 2 },
         { role: "repairer", targetPop: 1 },
+        { role: "combatEngineer", targetPop: 2 }
     ];
 
     var bodies = [
@@ -98,6 +100,9 @@ module.exports.loop = function () {
         }
         if (creep.memory.role == "remoteHarvester") {
             roleRemoteHarvester.run(creep);
+        }
+        if (creep.memory.role == "combatEngineer") {
+            roleCombatEngineer.run(creep);
         }
     }
 }
