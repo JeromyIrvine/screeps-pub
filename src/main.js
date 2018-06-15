@@ -12,9 +12,11 @@ module.exports.loop = function () {
 
     var hiring = [
         { role: "harvester", targetPop: 2 },
+        { role: "remoteHarvester", targetPop: 1, workRoom: "E42S1" },
+        { role: "remoteHarvester", targetPop: 1, workRoom: "E43S2" },
         { role: "builder", targetPop: 1 },
         { role: "upgrader", targetPop: 2 },
-        { role: "repairer", targetPop: 1 }
+        { role: "repairer", targetPop: 1 },
     ];
 
     var bodies = [
@@ -49,15 +51,25 @@ module.exports.loop = function () {
 
     for (let i = 0; i < hiring.length; i++) {
         let ct = hiring[i];
-        let pop = _.sum(creepsInRoom, c => c.memory.role == ct.role);
-
-        if (pop < ct.targetPop && spawn.room.energyAvailable >= energyNeeded) {
-            let name = `${ct.role.substring(0, 2)}${Memory.creepCount}`;
-            let creep = spawn.spawnCreep(bodyDesign, name, { memory: { role: ct.role } });
-            if (creep == OK) {
-                Memory.creepCount++;
-                console.log(`Spawned new ${ct.role} creep: ${name}`);
+        
+        if (ct.role == "remoteHarvester")
+        {
+            if (_.sum(Game.creeps, c => c.memory.role == ct.role && c.memory.workRoom == ct.workRoom) < ct.targetPop)
+            {
+                spawn.spawnRemoteHarvester(spawn.room.name, ct.workRoom);
                 break;
+            }
+        } else {
+            let pop = _.sum(creepsInRoom, c => c.memory.role == ct.role);
+
+            if (pop < ct.targetPop && spawn.room.energyAvailable >= energyNeeded) {
+                let name = `${ct.role.substring(0, 2)}${Memory.creepCount}`;
+                let creep = spawn.spawnCreep(bodyDesign, name, { memory: { role: ct.role } });
+                if (creep == OK) {
+                    Memory.creepCount++;
+                    console.log(`Spawned new ${ct.role} creep: ${name}`);
+                    break;
+                }
             }
         }
     }
