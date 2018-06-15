@@ -1,38 +1,67 @@
-# screeps-pub - Screeps code for the public server
+# screeps-pub
 
-## Setup
+This repo contains my code for the [Screeps game](https://screeps.com). The
+project is set up for development using Visual Studio Code, with Grunt tasks
+configured to deploy to the Screeps public server.
 
-1. Install [Node.js](https://nodejs.org/en/)
-2. Run `npm install -g grunt-cli` to install Grunt command line support.
-3. In your project folder, run `npm init` and setup your package.json file.
-4. Run `npm install grunt`
-5. Run `npm install grunt-screeps`
-6. Create a .screeps.json file for your credentials as directed [here](https://docs.screeps.com/contributed/advanced_grunt.html).
-7. Create a gruntfile.js - see this project's for structure.
+The code is written in JavaScript (ES6), but uses some TypeScript hinting to
+provide IntelliSense in VS Code.
+
+## Setup for development with Visual Studio Code
+
+1. Install [VS Code](https://code.visualstudio.com/)
+2. Install [Node.js](https://nodejs.org/en/)
+3. Update `package.json` with your information, or run `npm init` to recreate it.
+4. Run `npm install -g grunt-cli` to install Grunt command line support.
+5. Run `npm install grunt`
+6. Run `npm install grunt-screeps`
+7. Create a .screeps.json file for your credentials as described [here](https://docs.screeps.com/contributed/advanced_grunt.html).
+
+The `jsconfig.json` and `gruntfile.js` files should be usable as is if no change
+is made to the project structure.
+
+### Project Structure
+
+Most of the files in the root project directory are for project configuration.
+The actual scripts that we'll be deploying to game are in the `/src` directory.
+The `/ref` folders contains the TypeScript definition file from
+[the Screeps-Typescript-Declarations project](https://github.com/screepers/Screeps-Typescript-Declarations),
+which lets us get IntelliSense in VS Code by including a triple slash reference
+directive at the top of our JS files. Including JS Doc comments on methods will
+enable IntelliSense for the method arguments, as well.
+
+If you follow the instructions above for setup, you should be able to run the
+task `grunt screeps` to upload your `/src` folder to the Screeps server.
 
 ## TODO
 
-- [x] LD Harvesters, have a home room and work room. Do not pick up dropped energy in home room or less than a certain threshold. Prioritize carry, then move, then work.
+This is a list of things that I plan to add to my script. This will grow and
+change over time, as I finish items and think of new ideas.
+
+- [ ] Add Wall Repairers
 - [ ] Workers should task-lock when in range of task until done - no switching because a 'higher priority' task came up. This applies both to work and energy collection.
 - [ ] Harvesters should only pursue dropped energy if they are not already harvesting a source
+- [ ] Advanced worker management: upgraders, builders, and repairers are all *workers* who can be reassigned based on jobs available. New workers should only be built if the target population for a given job can't be filled.
+- [ ] Advanced tower logic: repair and heal
+- [x] LD Harvesters, have a home room and work room. Do not pick up dropped energy in home room or less than a certain threshold. Prioritize carry, then move, then work.
 - [x] Only one harvester should pursue a dropped energy - they should not all divert
 - [x] Harvesters should also looks for tombstones and grab that energy
-- [ ] Advanced tower logic: repair and heal
 - [x] Storage support for harvesters
 - [x] Storage awareness for workers
-- [ ] Add Wall Repairers
-- [ ] Advanced worker management: upgraders, builders, and repairers are all *workers* who can be reassigned based on jobs available. New workers should only be built if the target population for a given job can't be filled.
 
 ## Roles
 
+These are some of the roles that I've defined for my screeps.
+
 ### Harvester
 
-Harvests energy sources and brings them to the spawn, extensions, storage, and containers.
-Harvesters also scavenge tombstones and dropped energy sources > 40 in size.
+Harvests energy sources and brings them to the spawn, extensions, storage, and
+containers. Harvesters also scavenge tombstones and dropped energy sources > 40
+in size.
 
-### Long Distance Harvester *not yet coded*
+### Long Distance / Remote Harvester
 
-LDH's harvest energy from other rooms and import it.
+LDH's harvest energy from other rooms and bring it back to the home room for use.
 
 ### Upgrader
 
@@ -40,13 +69,14 @@ Upgraders use energy from containers or sources to upgrade the control point.
 
 ### Builder
 
-Builders use energy from containers or sources to build structures. If there is nothing to build,
-they will fall back to an Upgrader role.
+Builders use energy from containers or sources to build structures. If there is
+nothing to build, they will fall back to an Upgrader role.
 
 ### Repairer
 
-Repairers use energy from containers or sources to repair structures. If there is nothing to repair,
-they will fall back to a Builder role, and if nothing to build, to an Upgrader role.
+Repairers use energy from containers or sources to repair structures. If there
+is nothing to repair, they will fall back to a Builder role, and if nothing to
+build, to an Upgrader role.
 
 ### Wall Repairer *not yet coded*
 
