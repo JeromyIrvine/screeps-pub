@@ -13,11 +13,11 @@ module.exports.loop = function () {
 
     var hiring = [
         { role: "harvester", targetPop: 2 },
+        { role: "upgrader", targetPop: 2 },
+        { role: "repairer", targetPop: 1 },
         { role: "remoteHarvester", targetPop: 1, workRoom: "E42S1" },
         { role: "remoteHarvester", targetPop: 1, workRoom: "E43S2" },
         { role: "builder", targetPop: 1 },
-        { role: "upgrader", targetPop: 2 },
-        { role: "repairer", targetPop: 1 },
         { role: "combatEngineer", targetPop: 2 }
     ];
 
@@ -78,10 +78,7 @@ module.exports.loop = function () {
 
     let towers = spawn.room.find(FIND_MY_STRUCTURES, { filter: s => s.structureType == STRUCTURE_TOWER });
     for (let tower of towers) {
-        let target = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-        if (target) {
-            tower.attack(target);
-        }
+        runTower(tower);
     }
 
     for (var name in Game.creeps) {
@@ -105,6 +102,29 @@ module.exports.loop = function () {
             roleCombatEngineer.run(creep);
         }
     }
+}
+
+/** @param {StructureTower} tower **/
+function runTower(tower) {
+    let target = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+    if (target) {
+        tower.attack(target);
+    }
+
+    //TODO: oops. Towers have refill priority, and the immediately use it to buff ramparts, so they
+    // always need energy and we never build up enough to spawn new creeps. D'oh!
+
+    // let ramparts = tower.room.find(FIND_STRUCTURES, { filter: s => s.structureType == STRUCTURE_RAMPART });
+    // let targets = undefined;
+    // for (let pct = 0.001; pct <= 1; pct += 0.001) {
+    //     targets = _.filter(ramparts, w => w.hits / w.hitsMax < pct);
+    //     if (targets.length > 0) {
+    //         break;
+    //     }
+    // }
+    // if (targets.length > 0) {
+    //     tower.repair(tower.pos.findClosestByRange(targets));
+    // }
 }
 
 function garbageCollect() {

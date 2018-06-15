@@ -93,8 +93,7 @@ function harvestEnergy(creep) {
 /** @param {Structure} structure **/
 function filterToSinks(structure) {
     let st = structure.structureType;
-    return (st == STRUCTURE_EXTENSION || st == STRUCTURE_SPAWN || st == STRUCTURE_TOWER)
-        && structure.energy < structure.energyCapacity;
+    return (st == STRUCTURE_EXTENSION || st == STRUCTURE_SPAWN || st == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity;
 }
 
 module.exports = roleHarvester;
