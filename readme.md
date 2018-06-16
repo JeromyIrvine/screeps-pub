@@ -38,8 +38,10 @@ task `grunt screeps` to upload your `/src` folder to the Screeps server.
 This is a list of things that I plan to add to my script. This will grow and
 change over time, as I finish items and think of new ideas.
 
+- [x] Add Skirmisher unit that can hunt Invaders in remote rooms.
+- [ ] Figure out how to detect if an Invader is in a work room and spawn a Skirmisher in response.
 - [ ] Spawn logic should honor priority before available energy. Lower-cost items are jumping the list, currently.
-- [ ] Remote Harvesters should scan immediate area for tombstones / dropped energy and grab it during travel to work site.
+- [x] Remote Harvesters should scan immediate area for tombstones / dropped energy and grab it during travel to work site.
 - [ ] Workers should task-lock when in range of task until done - no switching because a 'higher priority' task came up. This applies both to work and energy collection.
 - [ ] Harvesters should only pursue dropped energy if they are not already harvesting a source
 - [ ] Advanced worker management: upgraders, builders, and repairers are all *workers* who can be reassigned based on jobs available. New workers should only be built if the target population for a given job can't be filled.

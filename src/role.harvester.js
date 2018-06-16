@@ -71,7 +71,7 @@ function harvestEnergy(creep) {
     }
     else {
         var tomb = creep.pos.findClosestByPath(FIND_TOMBSTONES);
-        if (tomb && tomb.store.energy >= 40 && (!Memory["dropped"] + tomb.id || Memory["dropped" + tomb.id] == creep.id)) {
+        if (tomb && tomb.store.energy >= 30 && (!Memory["dropped"] + tomb.id || Memory["dropped" + tomb.id] == creep.id)) {
             let result = creep.withdraw(tomb, RESOURCE_ENERGY);
             if (result == ERR_NOT_IN_RANGE) {
                 Memory["dropped" + tomb.id] = creep.id;

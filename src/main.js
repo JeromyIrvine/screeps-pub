@@ -6,6 +6,7 @@ var roleBuilder = require('role.builder');
 var roleRepairer = require("role.repairer");
 var roleRemoteHarvester = require("role.remoteHarvester");
 var roleCombatEngineer = require("role.combatEngineer");
+var roleSkirmisher = require("role.skirmisher");
 
 module.exports.loop = function () {
 
@@ -101,6 +102,9 @@ module.exports.loop = function () {
         if (creep.memory.role == "combatEngineer") {
             roleCombatEngineer.run(creep);
         }
+        if (creep.memory.role == "skirmisher") {
+            roleSkirmisher.run(creep);
+        }
     }
 }
 
@@ -154,3 +158,27 @@ StructureSpawn.prototype.spawnRemoteHarvester =
             }
         }
     };
+
+StructureSpawn.prototype.spawnSkirmisher = 
+    function (workRoom) {
+        let role = "skirmisher";
+        let bodyDesign = [
+            TOUGH, TOUGH, TOUGH, TOUGH, 
+            MOVE, MOVE, MOVE, MOVE, 
+            RANGED_ATTACK, 
+            ATTACK, ATTACK, 
+            MOVE, MOVE, 
+            HEAL, 
+            MOVE, MOVE
+        ];
+
+        if (this.room.energyAvailable >= 1000) {
+            let name = `sk${Memory.creepCount}`;
+            let creep = this.spawnCreep(bodyDesign, name, { memory: { role, workRoom } });
+            if (creep == OK) {
+                Memory.creepCount++;
+                console.log(`Spawned new ${role} creep: ${name}`);
+            }
+        }
+    };
+
