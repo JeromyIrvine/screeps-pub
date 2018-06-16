@@ -61,7 +61,7 @@ function harvestEnergy(creep) {
     // that we're already harvesting from unless that source runs out of energy.
 
     var dropped = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES, {
-        filter: res => res.resourceType == RESOURCE_ENERGY && res.amount >= 40
+        filter: res => res.resourceType == RESOURCE_ENERGY && res.amount >= 30
     });
     if (dropped && (!Memory["dropped" + dropped.id] || Memory["dropped" + dropped.id] == creep.id)) {
         if (creep.pickup(dropped) == ERR_NOT_IN_RANGE) {

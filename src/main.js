@@ -143,9 +143,9 @@ function garbageCollect() {
 StructureSpawn.prototype.spawnRemoteHarvester = 
     function (homeRoom, workRoom) {
         let role = "remoteHarvester";
-        let bodyDesign = [WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
+        let bodyDesign = [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
 
-        if (this.room.energyAvailable >= 1100) {
+        if (this.room.energyAvailable >= 1300) {
             let name = `rh${Memory.creepCount}`;
             let creep = this.spawnCreep(bodyDesign, name, { memory: { role, homeRoom, workRoom } });
             if (creep == OK) {

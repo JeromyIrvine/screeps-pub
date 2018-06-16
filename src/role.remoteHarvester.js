@@ -24,6 +24,22 @@ var roleRemoteHarvester = {
 
 /** @param {Creep} creep **/
 function harvestEnergy(creep) {
+    let tombs = creep.pos.findInRange(FIND_TOMBSTONES, 5);
+    if (tombs.length > 0) {
+        if (creep.withdraw(tombs[0]) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(tombs[0]);
+        }
+        return;
+    }
+
+    let drops = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 5, { filter: { resourceType: RESOURCE_ENERGY } });
+    if (drops.length > 0) {
+        if (creep.pickup(drops[0]) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(drops[0]);
+        }
+        return;
+    }
+
     if (creep.room.name != creep.memory.workRoom) {
         let exit = creep.room.findExitTo(creep.memory.workRoom);
         creep.moveTo(creep.pos.findClosestByPath(exit));
