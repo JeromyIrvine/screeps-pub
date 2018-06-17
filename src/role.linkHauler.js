@@ -6,11 +6,11 @@ var roleLinkHauler = {
     run: function (creep) {
         if (creep.memory.collecting && creep.carry.energy == creep.carryCapacity) {
             creep.memory.collecting = false;
-            creep.say('📦 unload');
+            //creep.say('📦 unload');
         }
         if (!creep.memory.collecting && creep.carry.energy == 0) {
             creep.memory.collecting = true;
-            creep.say('🔄 haul');
+            //creep.say('🔄 haul');
         }
 
         if (creep.memory.collecting) {
