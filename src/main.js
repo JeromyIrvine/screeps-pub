@@ -7,6 +7,9 @@ var roleRepairer = require("role.repairer");
 var roleRemoteHarvester = require("role.remoteHarvester");
 var roleCombatEngineer = require("role.combatEngineer");
 var roleSkirmisher = require("role.skirmisher");
+// var roleLinkHarvester = require("role.linkHarvester");
+// var roleLinkHauler = require("role.linkHauler");
+// var linkBrain = require("linkBrain");
 
 module.exports.loop = function () {
 
@@ -19,10 +22,13 @@ module.exports.loop = function () {
         { role: "remoteHarvester", targetPop: 1, workRoom: "E42S1" },
         { role: "remoteHarvester", targetPop: 1, workRoom: "E43S2" },
         { role: "builder", targetPop: 1 },
-        { role: "combatEngineer", targetPop: 2 }
+        { role: "combatEngineer", targetPop: 1 }
     ];
 
+    //TODO: new body types for the extra 500 energy
     var bodies = [
+        { energy: 1800, body: [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE] },
+        { energy: 1500, body: [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE] },
         { energy: 1300, body: [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE] },
         { energy: 1200, body: [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE] },
         { energy: 1100, body: [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE] },
