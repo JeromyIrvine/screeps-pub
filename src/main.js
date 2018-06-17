@@ -18,8 +18,8 @@ module.exports.loop = function () {
     var hiring = [
         { role: "harvester", targetPop: 1 },
         { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4286", linkId: "5b25dd2395593b53c85cadae" } },
-        { role: "linkHauler", targetPop: 1, memory: { linkId: "5b25ced2c20f5b53b28a2732" } },
-        { role: "upgrader", targetPop: 2 },
+        { role: "linkHauler", targetPop: 2, memory: { linkId: "5b25ced2c20f5b53b28a2732" } },
+        { role: "upgrader", targetPop: 1 },
         { role: "repairer", targetPop: 1 },
         { role: "remoteHarvester", targetPop: 1, workRoom: "E42S1" },
         { role: "remoteHarvester", targetPop: 1, workRoom: "E43S2" },
@@ -27,7 +27,6 @@ module.exports.loop = function () {
         { role: "combatEngineer", targetPop: 1 }
     ];
 
-    //TODO: new body types for the extra 500 energy
     var bodies = [
         { energy: 1800, body: [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE] },
         { energy: 1500, body: [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE] },
@@ -71,7 +70,9 @@ module.exports.loop = function () {
                 break;
             }
         } else if (ct.role == "linkHarvester") {
-            if (_.sum(Game.creeps, c => c.memory.role == ct.role) < ct.targetPop && spawn.room.energyAvailable >= 600) {
+
+            let lh = _.find(Game.creeps, c => c.memory.role == ct.role);
+            if ((!lh || lh.ticksToLive < 100) && spawn.room.energyAvailable >= 600) {
                 let body = [WORK, WORK, WORK, WORK, WORK, CARRY, MOVE];
                 let name = `lha${Memory.creepCount}`;
                 let memory = Object.assign({ role: ct.role }, ct.memory);
@@ -82,9 +83,10 @@ module.exports.loop = function () {
                     break;
                 }
             }
+
         } else if (ct.role == "linkHauler") {
-            if (_.sum(Game.creeps, c => c.memory.role == ct.role) < ct.targetPop && spawn.room.energyAvailable >= 700) {
-                let body = [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
+            if (_.sum(Game.creeps, c => c.memory.role == ct.role) < ct.targetPop && spawn.room.energyAvailable >= 900) {
+                let body = [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
                 let name = `haul${Memory.creepCount}`;
                 let memory = Object.assign({ role: ct.role }, ct.memory);
                 let creep = spawn.spawnCreep(body, name, { memory });

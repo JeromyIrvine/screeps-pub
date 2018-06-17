@@ -27,7 +27,7 @@ function harvestEnergy(creep, link) {
     let tombs = creep.pos.findInRange(FIND_TOMBSTONES, 15, { filter: t => t.store.energy >= 30 && (!Memory["dropped" + t.id] || Memory["dropped" + t.id] == creep.id) });
     if (tombs.length > 0) {
         let target = tombs[0];
-        if (creep.withdraw(target) == ERR_NOT_IN_RANGE) {
+        if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
             Memory["dropped" + target.id] = creep.id;
             creep.moveTo(target);
         }
@@ -37,7 +37,7 @@ function harvestEnergy(creep, link) {
     let drops = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 15, {
         filter: d => d.resourceType == RESOURCE_ENERGY && (!Memory["dropped" + d.id] || Memory["dropped" + d.id] == creep.id)
     });
-    if (drops > 0) {
+    if (drops.length > 0) {
         let target = drops[0];
         if (creep.pickup(target) == ERR_NOT_IN_RANGE) {
             Memory["dropped" + target.id] = creep.id; // who's going to pick it up
@@ -50,6 +50,7 @@ function harvestEnergy(creep, link) {
     if (result == ERR_NOT_IN_RANGE) {
         creep.moveTo(link);
     } else if (result == ERR_NOT_ENOUGH_RESOURCES) {
+        // If there's no new energy, go ahead and distribute what we have.
         creep.memory.collecting = false;
     }
 }
