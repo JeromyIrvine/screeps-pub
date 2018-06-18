@@ -80,9 +80,10 @@ function harvestEnergy(creep) {
             else if (result == OK) {
                 console.log(`${creep.name} harvested the tombstone of ${tomb.creep.name}`);
             }
-        }
-        else {
-            var source = creep.pos.findClosestByPath(FIND_SOURCES, { filter: s => s.energy > 0 });
+        } else {
+            let source = creep.memory.sourceId
+                ? Game.getObjectById(creep.memory.sourceId)
+                : creep.pos.findClosestByPath(FIND_SOURCES, { filter: s => s.energy > 0 });
             if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
             }

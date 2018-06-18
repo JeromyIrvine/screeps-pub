@@ -16,7 +16,7 @@ module.exports.loop = function () {
     garbageCollect();
 
     var hiring = [
-        { role: "harvester", targetPop: 1 },
+        { role: "harvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4288" } },
         { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4286", linkId: "5b25dd2395593b53c85cadae" } },
         { role: "linkHauler", targetPop: 1, memory: { linkId: "5b25ced2c20f5b53b28a2732" } },
         { role: "upgrader", targetPop: 1 },
@@ -101,7 +101,8 @@ module.exports.loop = function () {
 
             if (pop < ct.targetPop && spawn.room.energyAvailable >= energyNeeded) {
                 let name = `${ct.role.substring(0, 2)}${Memory.creepCount}`;
-                let creep = spawn.spawnCreep(bodyDesign, name, { memory: { role: ct.role } });
+                let memory = Object.assign({ role: ct.role }, ct.memory);
+                let creep = spawn.spawnCreep(bodyDesign, name, { memory });
                 if (creep == OK) {
                     Memory.creepCount++;
                     console.log(`Spawned new ${ct.role} creep: ${name}`);
