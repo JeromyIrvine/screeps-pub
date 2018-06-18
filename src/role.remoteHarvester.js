@@ -24,7 +24,7 @@ var roleRemoteHarvester = {
 
 /** @param {Creep} creep **/
 function harvestEnergy(creep) {
-    let tombs = creep.pos.findInRange(FIND_TOMBSTONES, 5);
+    let tombs = creep.pos.findInRange(FIND_TOMBSTONES, 5, { filter: x => x.store.energy > 0 });
     if (tombs.length > 0) {
         if (creep.withdraw(tombs[0]) == ERR_NOT_IN_RANGE) {
             creep.moveTo(tombs[0]);
@@ -32,7 +32,7 @@ function harvestEnergy(creep) {
         return;
     }
 
-    let drops = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 5, { filter: { resourceType: RESOURCE_ENERGY } });
+    let drops = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 5, { filter: x => x.resourceType == RESOURCE_ENERGY && x.energy > 0 });
     if (drops.length > 0) {
         if (creep.pickup(drops[0]) == ERR_NOT_IN_RANGE) {
             creep.moveTo(drops[0]);
