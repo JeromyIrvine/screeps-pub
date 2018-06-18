@@ -18,7 +18,7 @@ module.exports.loop = function () {
     var hiring = [
         { role: "harvester", targetPop: 1 },
         { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4286", linkId: "5b25dd2395593b53c85cadae" } },
-        { role: "linkHauler", targetPop: 2, memory: { linkId: "5b25ced2c20f5b53b28a2732" } },
+        { role: "linkHauler", targetPop: 1, memory: { linkId: "5b25ced2c20f5b53b28a2732" } },
         { role: "upgrader", targetPop: 1 },
         { role: "repairer", targetPop: 1 },
         { role: "remoteHarvester", targetPop: 1, workRoom: "E42S1" },
@@ -71,8 +71,8 @@ module.exports.loop = function () {
             }
         } else if (ct.role == "linkHarvester") {
 
-            let lh = _.find(Game.creeps, c => c.memory.role == ct.role);
-            if ((!lh || lh.ticksToLive < 100) && spawn.room.energyAvailable >= 600) {
+            let harvesters = _.filter(Game.creeps, c => c.memory.role == ct.role);
+            if ((harvesters.length == 0 || (harvesters.length == 1 && harvesters[0].ticksToLive <= 20)) && spawn.room.energyAvailable >= 600) {
                 let body = [WORK, WORK, WORK, WORK, WORK, CARRY, MOVE];
                 let name = `lha${Memory.creepCount}`;
                 let memory = Object.assign({ role: ct.role }, ct.memory);
