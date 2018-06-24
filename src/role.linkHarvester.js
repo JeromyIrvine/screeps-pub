@@ -11,7 +11,9 @@ var roleLinkHarvester = {
         if (result == ERR_NOT_IN_RANGE) {
             creep.moveTo(source);
         } else if (result == OK) {
-            creep.transfer(link, RESOURCE_ENERGY);
+            if (creep.transfer(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(link);
+            }
         }
     },
 
