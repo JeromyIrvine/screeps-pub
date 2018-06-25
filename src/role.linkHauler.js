@@ -24,26 +24,30 @@ var roleLinkHauler = {
 /** @param {Creep} creep */
 /** @param {StructureLink} link */
 function harvestEnergy(creep, link) {
-    let tombs = creep.pos.findInRange(FIND_TOMBSTONES, 15, { filter: t => t.store.energy >= 30 && (!Memory["dropped" + t.id] || Memory["dropped" + t.id] == creep.id) });
-    if (tombs.length > 0) {
-        let target = tombs[0];
-        if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-            Memory["dropped" + target.id] = creep.id;
-            creep.moveTo(target);
+    
+    // Only pursue dropped items if the link is not in danger of filling up.
+    if (link.energy < 600) {
+        let tombs = creep.pos.findInRange(FIND_TOMBSTONES, 15, { filter: t => t.store.energy >= 30 && (!Memory["dropped" + t.id] || Memory["dropped" + t.id] == creep.id) });
+        if (tombs.length > 0) {
+            let target = tombs[0];
+            if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                Memory["dropped" + target.id] = creep.id;
+                creep.moveTo(target);
+            }
+            return;
         }
-        return;
-    }
 
-    let drops = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 15, {
-        filter: d => d.resourceType == RESOURCE_ENERGY && (!Memory["dropped" + d.id] || Memory["dropped" + d.id] == creep.id)
-    });
-    if (drops.length > 0) {
-        let target = drops[0];
-        if (creep.pickup(target) == ERR_NOT_IN_RANGE) {
-            Memory["dropped" + target.id] = creep.id; // who's going to pick it up
-            creep.moveTo(target);
+        let drops = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 15, {
+            filter: d => d.resourceType == RESOURCE_ENERGY && (!Memory["dropped" + d.id] || Memory["dropped" + d.id] == creep.id)
+        });
+        if (drops.length > 0) {
+            let target = drops[0];
+            if (creep.pickup(target) == ERR_NOT_IN_RANGE) {
+                Memory["dropped" + target.id] = creep.id; // who's going to pick it up
+                creep.moveTo(target);
+            }
+            return;
         }
-        return;
     }
     
     let result = creep.withdraw(link, RESOURCE_ENERGY);
