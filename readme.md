@@ -48,6 +48,7 @@ change over time, as I finish items and think of new ideas.
 - [ ] Advanced tower logic: repair and heal **don't let towers repair ramparts until they've been maxed by workers**
 - [ ] **With link harvester in place, other creeps should not work that source.**
 - [ ] Haulers should only unload from the link when it has >= 100, for efficiency.
+- [ ] All workers should scavenge nearby drops when looking for energy. RH code can be generalized.
 
 ## Roles
 

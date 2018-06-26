@@ -32,7 +32,7 @@ function harvestEnergy(creep) {
         return;
     }
 
-    let drops = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 5, { filter: x => x.resourceType == RESOURCE_ENERGY && x.energy > 0 });
+    let drops = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 5, { filter: x => x.resourceType == RESOURCE_ENERGY && x.amount > 0 });
     if (drops.length > 0) {
         if (creep.pickup(drops[0]) == ERR_NOT_IN_RANGE) {
             creep.moveTo(drops[0]);

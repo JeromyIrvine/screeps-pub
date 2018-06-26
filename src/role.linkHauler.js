@@ -38,7 +38,7 @@ function harvestEnergy(creep, link) {
         }
 
         let drops = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 15, {
-            filter: d => d.resourceType == RESOURCE_ENERGY && (!Memory["dropped" + d.id] || Memory["dropped" + d.id] == creep.id)
+            filter: d => d.resourceType == RESOURCE_ENERGY && d.amount >= 30 && (!Memory["dropped" + d.id] || Memory["dropped" + d.id] == creep.id)
         });
         if (drops.length > 0) {
             let target = drops[0];

@@ -19,7 +19,7 @@ module.exports.loop = function () {
         // { role: "harvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4288" } },
         { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4286", linkId: "5b25dd2395593b53c85cadae" } },
         { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4288", linkId: "5b2fe7746ef2600f13dc2fb8" } },
-        { role: "linkHauler", targetPop: 1, memory: { linkId: "5b25ced2c20f5b53b28a2732" } },
+        { role: "linkHauler", targetPop: 2, memory: { linkId: "5b25ced2c20f5b53b28a2732" } },
         { role: "upgrader", targetPop: 1 },
         { role: "repairer", targetPop: 1 },
         { role: "remoteHarvester", targetPop: 1, workRoom: "E42S1" },
