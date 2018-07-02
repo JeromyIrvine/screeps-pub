@@ -17,24 +17,31 @@ module.exports.loop = function () {
 
     garbageCollect();
 
-    var hiring = [
-        // { role: "harvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4288" } },
-        { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4286", linkId: "5b25dd2395593b53c85cadae" } },
-        { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4288", linkId: "5b2fe7746ef2600f13dc2fb8" } },
-        { role: "linkHauler", targetPop: 2, memory: { linkId: "5b25ced2c20f5b53b28a2732" } },
-        { role: "upgrader", targetPop: 1 },
-        { role: "repairer", targetPop: 1 },
-        { role: "remoteHarvester", targetPop: 1, workRoom: "E42S1" },
-        { role: "remoteHarvester", targetPop: 1, workRoom: "E43S2" },
-        { role: "builder", targetPop: 1 },
-        { role: "combatEngineer", targetPop: 1 }
-    ];
-
-    var hiringRoom2 = [
-        { role: "harvester", targetPop: 2 },
-        { role: "builder", targetPop: 2 },
-        { role: "upgrader", targetPop: 1 },
-        { role: "repairer", targetPop: 1 }
+    var hr = [
+        {
+            room: "E43S1", 
+            roster: [
+                // { role: "harvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4288" } },
+                { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4286", linkId: "5b25dd2395593b53c85cadae" } },
+                { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4288", linkId: "5b2fe7746ef2600f13dc2fb8" } },
+                { role: "linkHauler", targetPop: 2, memory: { linkId: "5b25ced2c20f5b53b28a2732" } },
+                { role: "upgrader", targetPop: 1 },
+                { role: "repairer", targetPop: 1 },
+                { role: "remoteHarvester", targetPop: 1, workRoom: "E42S1" },
+                { role: "remoteHarvester", targetPop: 1, workRoom: "E43S2" },
+                { role: "builder", targetPop: 1 },
+                { role: "combatEngineer", targetPop: 1 }
+            ]
+        },
+        {
+            room: "E44S1", 
+            roster: [
+                { role: "harvester", targetPop: 1 },
+                { role: "builder", targetPop: 2 },
+                { role: "upgrader", targetPop: 1 },
+                { role: "repairer", targetPop: 1 }
+            ]
+        }
     ];
 
     var bodies = [
@@ -63,10 +70,11 @@ module.exports.loop = function () {
         { energy: 300, body: [WORK, CARRY, CARRY, MOVE, MOVE] }
     ];
 
-    //TODO: iterate spawns. Pass in the hiring chat based on the room.
-
-    let spawn = Game.spawns.Spawn1;
-    runRoom(spawn, hiring, bodies);
+    for (const key in Game.spawns) {
+        let spawn = Game.spawns[key];
+        let roster = _.find(hr, x => x.room == spawn.room.name).roster;
+        runRoom(spawn, roster, bodies);
+    }
 
     linkBrain.transfer(Game.getObjectById("5b25dd2395593b53c85cadae"), Game.getObjectById("5b25ced2c20f5b53b28a2732"));
     linkBrain.transfer(Game.getObjectById("5b2fe7746ef2600f13dc2fb8"), Game.getObjectById("5b25ced2c20f5b53b28a2732"));
@@ -269,7 +277,7 @@ StructureSpawn.prototype.spawnSkirmisher =
         }
     };
 
-    StructureSpawn.prototype.spawnClaimer = 
+StructureSpawn.prototype.spawnClaimer = 
     function (workRoom) {
         let role = "claimer";
         let bodyDesign = [WORK, CLAIM, MOVE, MOVE];

@@ -18,7 +18,7 @@ var roleDismantler = {
                 }
                 return;
             } else {
-                let wall = creep.room.findClosestByPath(FIND_STRUCTURES, { 
+                let wall = creep.room.find(FIND_STRUCTURES, { 
                     filter: s => s.structureType == STRUCTURE_WALL && s.pos.x < 4 && s.pos.y < 16 
                 });
                 if (wall && creep.dismantle(wall) == ERR_NOT_IN_RANGE) {

@@ -4,6 +4,12 @@ var roleUpgrader = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
+        
+		if (creep.memory.workRoom && creep.room.name != creep.memory.workRoom) {
+            let exit = creep.room.findExitTo(creep.memory.workRoom);
+			creep.moveTo(creep.pos.findClosestByPath(exit));
+			return;
+		}
 
         if(creep.memory.working && creep.carry.energy == 0) {
             creep.memory.working = false;
