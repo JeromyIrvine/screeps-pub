@@ -48,8 +48,18 @@ var roleBuilder = {
 			}
 		}
 		else {
+			let tombs = creep.pos.findInRange(FIND_TOMBSTONES, 10, { filter: t => t.store.energy >= 30 && (!Memory["dropped" + t.id] || Memory["dropped" + t.id] == creep.id) });
+			if (tombs.length > 0) {
+				let target = tombs[0];
+				if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+					Memory["dropped" + target.id] = creep.id;
+					creep.moveTo(target);
+				}
+				return;
+			}
+			
 			let drops = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 10, {
-				filter: d => d.resourceType == RESOURCE_ENERGY && d.amount >= 30 && (!Memory["dropped" + d.id] || Memory["dropped" + d.id] == creep.id)
+			filter: d => d.resourceType == RESOURCE_ENERGY && d.amount >= 30 && (!Memory["dropped" + d.id] || Memory["dropped" + d.id] == creep.id)
 			});
 			if (drops.length > 0) {
 				let target = drops[0];
