@@ -9,6 +9,8 @@ var roleCombatEngineer = require("role.combatEngineer");
 var roleSkirmisher = require("role.skirmisher");
 var roleLinkHarvester = require("role.linkHarvester");
 var roleLinkHauler = require("role.linkHauler");
+var roleClaimer = require("role.claimer");
+var roleDismantler = require("role.dismantler");
 var linkBrain = require("linkBrain");
 
 module.exports.loop = function () {
@@ -26,6 +28,13 @@ module.exports.loop = function () {
         { role: "remoteHarvester", targetPop: 1, workRoom: "E43S2" },
         { role: "builder", targetPop: 1 },
         { role: "combatEngineer", targetPop: 1 }
+    ];
+
+    var hiringRoom2 = [
+        { role: "harvester", targetPop: 2 },
+        { role: "builder", targetPop: 2 },
+        { role: "upgrader", targetPop: 1 },
+        { role: "repairer", targetPop: 1 }
     ];
 
     var bodies = [
@@ -54,7 +63,59 @@ module.exports.loop = function () {
         { energy: 300, body: [WORK, CARRY, CARRY, MOVE, MOVE] }
     ];
 
+    //TODO: iterate spawns. Pass in the hiring chat based on the room.
+
     let spawn = Game.spawns.Spawn1;
+    runRoom(spawn, hiring, bodies);
+
+    linkBrain.transfer(Game.getObjectById("5b25dd2395593b53c85cadae"), Game.getObjectById("5b25ced2c20f5b53b28a2732"));
+    linkBrain.transfer(Game.getObjectById("5b2fe7746ef2600f13dc2fb8"), Game.getObjectById("5b25ced2c20f5b53b28a2732"));
+
+    for (var name in Game.creeps) {
+        var creep = Game.creeps[name];
+        if (creep.memory.role == "linkHarvester") {
+            roleLinkHarvester.run(creep);
+        }
+        if (creep.memory.role == "linkHauler") {
+            roleLinkHauler.run(creep);
+        }
+        if (creep.memory.role == 'harvester') {
+            roleHarvester.run(creep);
+        }
+        if (creep.memory.role == 'upgrader') {
+            roleUpgrader.run(creep);
+        }
+        if (creep.memory.role == 'builder') {
+            roleBuilder.run(creep);
+        }
+        if (creep.memory.role == "repairer") {
+            roleRepairer.run(creep);
+        }
+        if (creep.memory.role == "remoteHarvester") {
+            roleRemoteHarvester.run(creep);
+        }
+        if (creep.memory.role == "combatEngineer") {
+            roleCombatEngineer.run(creep);
+        }
+        if (creep.memory.role == "skirmisher") {
+            roleSkirmisher.run(creep);
+        }
+        if (creep.memory.role == "linkHarvester") {
+            roleLinkHarvester.run(creep);
+        }
+        if (creep.memory.role == "linkHauler") {
+            roleLinkHauler.run(creep);
+        }
+        if (creep.memory.role == "claimer") {
+            roleClaimer.run(creep);
+        }
+        if (creep.memory.role == "dismantler") {
+            roleDismantler.run(creep);
+        }
+    }
+}
+
+function runRoom(spawn, hiring, bodies) {
     let creepsInRoom = spawn.room.find(FIND_MY_CREEPS);
 
     let energyNeeded = 0;
@@ -126,46 +187,6 @@ module.exports.loop = function () {
     let towers = spawn.room.find(FIND_MY_STRUCTURES, { filter: s => s.structureType == STRUCTURE_TOWER });
     for (let tower of towers) {
         runTower(tower);
-    }
-
-    linkBrain.transfer(Game.getObjectById("5b25dd2395593b53c85cadae"), Game.getObjectById("5b25ced2c20f5b53b28a2732"));
-    linkBrain.transfer(Game.getObjectById("5b2fe7746ef2600f13dc2fb8"), Game.getObjectById("5b25ced2c20f5b53b28a2732"));
-
-    for (var name in Game.creeps) {
-        var creep = Game.creeps[name];
-        if (creep.memory.role == "linkHarvester") {
-            roleLinkHarvester.run(creep);
-        }
-        if (creep.memory.role == "linkHauler") {
-            roleLinkHauler.run(creep);
-        }
-        if (creep.memory.role == 'harvester') {
-            roleHarvester.run(creep);
-        }
-        if (creep.memory.role == 'upgrader') {
-            roleUpgrader.run(creep);
-        }
-        if (creep.memory.role == 'builder') {
-            roleBuilder.run(creep);
-        }
-        if (creep.memory.role == "repairer") {
-            roleRepairer.run(creep);
-        }
-        if (creep.memory.role == "remoteHarvester") {
-            roleRemoteHarvester.run(creep);
-        }
-        if (creep.memory.role == "combatEngineer") {
-            roleCombatEngineer.run(creep);
-        }
-        if (creep.memory.role == "skirmisher") {
-            roleSkirmisher.run(creep);
-        }
-        if (creep.memory.role == "linkHarvester") {
-            roleLinkHarvester.run(creep);
-        }
-        if (creep.memory.role == "linkHauler") {
-            roleLinkHauler.run(creep);
-        }
     }
 }
 
@@ -248,3 +269,17 @@ StructureSpawn.prototype.spawnSkirmisher =
         }
     };
 
+    StructureSpawn.prototype.spawnClaimer = 
+    function (workRoom) {
+        let role = "claimer";
+        let bodyDesign = [WORK, CLAIM, MOVE, MOVE];
+
+        if (this.room.energyAvailable >= 80) {
+            let name = `claim${Memory.creepCount}`;
+            let creep = this.spawnCreep(bodyDesign, name, { memory: { role, workRoom } });
+            if (creep == OK) {
+                Memory.creepCount++;
+                console.log(`Spawned new ${role} creep: ${name}`);
+            }
+        }
+    };
