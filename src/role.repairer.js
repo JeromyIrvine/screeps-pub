@@ -19,10 +19,11 @@ var roleRepairer = {
 		if (creep.memory.working) {
 			let target = undefined;
 
-			if (creep.memory.targetId) {
-				target = Game.getObjectById(creep.memory.targetId);
-				if (target.hits >= target.hitsMax) {
+			if (creep.memory.repairTargetId) {
+				target = Game.getObjectById(creep.memory.repairTargetId);
+				if (!target || target.hits >= target.hitsMax) {
 					target = undefined;
+					creep.memory.repairTargetId = null;
 				}
 			}
 
@@ -31,7 +32,7 @@ var roleRepairer = {
 					filter: s => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART
 				});
 				if (target) {
-					creep.memory.targetId = target.id;
+					creep.memory.repairTargetId = target.id;
 				}
 			}
 
