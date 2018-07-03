@@ -1,4 +1,5 @@
 /// <reference path="../ref/screeps.d.ts" />
+/// <reference path="../ref/custom.d.ts" />
 
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
@@ -123,6 +124,12 @@ module.exports.loop = function () {
     }
 }
 
+/**
+ * Runs the room for a tick.
+ * @param {StructureSpawn} spawn 
+ * @param {CreepDescription[]} hiring 
+ * @param {BodyPlan[]} bodies 
+ */
 function runRoom(spawn, hiring, bodies) {
     let creepsInRoom = spawn.room.find(FIND_MY_CREEPS);
 
@@ -185,7 +192,7 @@ function runRoom(spawn, hiring, bodies) {
                 let creep = spawn.spawnCreep(bodyDesign, name, { memory });
                 if (creep == OK) {
                     Memory.creepCount++;
-                    console.log(`Spawned new ${ct.role} creep: ${name}`);
+                    console.log(`Spawned ${ct.role} '${name}' in room ${spawn.room.name}`);
                     break;
                 }
             }
