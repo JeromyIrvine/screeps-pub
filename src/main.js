@@ -14,6 +14,20 @@ var roleClaimer = require("role.claimer");
 var roleDismantler = require("role.dismantler");
 var linkBrain = require("linkBrain");
 
+const roleModuleMap = {
+    linkHarvester: roleLinkHarvester,
+    linkHauler: roleLinkHauler,
+    harvester: roleHarvester,
+    upgrader: roleUpgrader,
+    builder: roleBuilder,
+    repairer: roleRepairer,
+    remoteHarvester: roleRemoteHarvester,
+    combatEngineer: roleCombatEngineer,
+    skirmisher: roleSkirmisher,
+    claimer: roleClaimer,
+    dismantler: roleDismantler
+};
+
 module.exports.loop = function () {
 
     garbageCollect();
@@ -65,13 +79,13 @@ module.exports.loop = function () {
         { energy: 700, body: [WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE] },
         { energy: 650, body: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE] },
         { energy: 600, body: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE] },
-        { energy: 550, body: [WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE] },
-        { energy: 450, body: [WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE] },
+        { energy: 550, body: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE] },
+        { energy: 450, body: [WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE] },
         { energy: 400, body: [WORK, WORK, CARRY, CARRY, MOVE, MOVE] },
         { energy: 300, body: [WORK, CARRY, CARRY, MOVE, MOVE] }
     ];
 
-    for (const key in Game.spawns) {
+    for (let key in Game.spawns) {
         let spawn = Game.spawns[key];
         let roster = _.find(hr, x => x.room == spawn.room.name).roster;
         runRoom(spawn, roster, bodies);
@@ -80,47 +94,9 @@ module.exports.loop = function () {
     linkBrain.transfer(Game.getObjectById("5b25dd2395593b53c85cadae"), Game.getObjectById("5b25ced2c20f5b53b28a2732"));
     linkBrain.transfer(Game.getObjectById("5b2fe7746ef2600f13dc2fb8"), Game.getObjectById("5b25ced2c20f5b53b28a2732"));
 
-    for (var name in Game.creeps) {
-        var creep = Game.creeps[name];
-        if (creep.memory.role == "linkHarvester") {
-            roleLinkHarvester.run(creep);
-        }
-        if (creep.memory.role == "linkHauler") {
-            roleLinkHauler.run(creep);
-        }
-        if (creep.memory.role == 'harvester') {
-            roleHarvester.run(creep);
-        }
-        if (creep.memory.role == 'upgrader') {
-            roleUpgrader.run(creep);
-        }
-        if (creep.memory.role == 'builder') {
-            roleBuilder.run(creep);
-        }
-        if (creep.memory.role == "repairer") {
-            roleRepairer.run(creep);
-        }
-        if (creep.memory.role == "remoteHarvester") {
-            roleRemoteHarvester.run(creep);
-        }
-        if (creep.memory.role == "combatEngineer") {
-            roleCombatEngineer.run(creep);
-        }
-        if (creep.memory.role == "skirmisher") {
-            roleSkirmisher.run(creep);
-        }
-        if (creep.memory.role == "linkHarvester") {
-            roleLinkHarvester.run(creep);
-        }
-        if (creep.memory.role == "linkHauler") {
-            roleLinkHauler.run(creep);
-        }
-        if (creep.memory.role == "claimer") {
-            roleClaimer.run(creep);
-        }
-        if (creep.memory.role == "dismantler") {
-            roleDismantler.run(creep);
-        }
+    for (let name in Game.creeps) {
+        let creep = Game.creeps[name];
+        roleModuleMap[creep.memory.role].run(creep);
     }
 }
 
@@ -211,21 +187,6 @@ function runTower(tower) {
     if (target) {
         tower.attack(target);
     }
-
-    //TODO: oops. Towers have refill priority, and the immediately use it to buff ramparts, so they
-    // always need energy and we never build up enough to spawn new creeps. D'oh!
-
-    // let ramparts = tower.room.find(FIND_STRUCTURES, { filter: s => s.structureType == STRUCTURE_RAMPART });
-    // let targets = undefined;
-    // for (let pct = 0.001; pct <= 1; pct += 0.001) {
-    //     targets = _.filter(ramparts, w => w.hits / w.hitsMax < pct);
-    //     if (targets.length > 0) {
-    //         break;
-    //     }
-    // }
-    // if (targets.length > 0) {
-    //     tower.repair(tower.pos.findClosestByRange(targets));
-    // }
 }
 
 function garbageCollect() {
