@@ -5,6 +5,12 @@ var roleHarvester = {
     /** @param {Creep} creep **/
     run: function (creep) {
 
+		if (creep.memory.workRoom && creep.room.name != creep.memory.workRoom) {
+            let exit = creep.room.findExitTo(creep.memory.workRoom);
+			creep.moveTo(creep.pos.findClosestByPath(exit));
+			return;
+		}
+
         if (creep.memory.harvesting && creep.carry.energy == creep.carryCapacity) {
             creep.memory.harvesting = false;
             creep.say('📦 unload');
@@ -43,12 +49,13 @@ function deliverEnergy(creep) {
         }
     }
     else {
-        var containers = creep.room.find(FIND_STRUCTURES, {
+        let containers = creep.room.find(FIND_STRUCTURES, {
             filter: c => c.structureType == STRUCTURE_CONTAINER && c.store.energy < c.storeCapacity
         });
         if (containers.length > 0) {
-            if (creep.transfer(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(containers[0]);
+            let container = creep.pos.findClosestByPath(containers);
+            if (creep.transfer(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(container);
             }
         }
     }
