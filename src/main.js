@@ -37,6 +37,7 @@ module.exports.loop = function () {
             room: "E43S1", 
             roster: [
                 // { role: "harvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4288" } },
+                // { role: "harvester", targetPop: 1, memory: { workRoom: "E44S1" } },
                 { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4286", linkId: "5b25dd2395593b53c85cadae" } },
                 { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983005eb097071b4adc4288", linkId: "5b2fe7746ef2600f13dc2fb8" } },
                 { role: "linkHauler", targetPop: 2, memory: { linkId: "5b25ced2c20f5b53b28a2732" } },
@@ -54,7 +55,8 @@ module.exports.loop = function () {
                 { role: "harvester", targetPop: 1 },
                 { role: "builder", targetPop: 2 },
                 { role: "upgrader", targetPop: 1 },
-                { role: "repairer", targetPop: 1 }
+                { role: "repairer", targetPop: 1 },
+                { role: "combatEngineer", targetPop: 1 }
             ]
         }
     ];
