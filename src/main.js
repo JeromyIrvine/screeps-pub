@@ -52,7 +52,7 @@ module.exports.loop = function () {
         {
             room: "E44S1", 
             roster: [
-                { role: "harvester", targetPop: 1 },
+                { role: "harvester", targetPop: 2 },
                 { role: "builder", targetPop: 2 },
                 { role: "upgrader", targetPop: 1 },
                 { role: "repairer", targetPop: 1 },
