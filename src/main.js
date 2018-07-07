@@ -12,6 +12,7 @@ var roleLinkHarvester = require("role.linkHarvester");
 var roleLinkHauler = require("role.linkHauler");
 var roleClaimer = require("role.claimer");
 var roleDismantler = require("role.dismantler");
+var roleHeavyHauler = require("role.heavyHauler");
 var linkBrain = require("linkBrain");
 
 const roleModuleMap = {
@@ -25,7 +26,8 @@ const roleModuleMap = {
     combatEngineer: roleCombatEngineer,
     skirmisher: roleSkirmisher,
     claimer: roleClaimer,
-    dismantler: roleDismantler
+    dismantler: roleDismantler,
+    heavyHauler: roleHeavyHauler
 };
 
 module.exports.loop = function () {
@@ -282,5 +284,21 @@ StructureSpawn.prototype.spawnClaimer =
                 Memory.creepCount++;
                 logSpawn(role, name, this.room.name);
             }
+        }
+    };
+
+StructureSpawn.prototype.spawnHeavyHauler = 
+    function(sourceRoom, targetRoom) {
+        let role = "heavyHauler";
+        let body = roleHeavyHauler.body;
+
+        if (this.room.energyAvailable >= roleHeavyHauler.spawnCost) {
+            let name = `hh${Memory.creepCount}`;
+            let creep = this.spawnCreep(body, name, { memory: { role, sourceRoom, targetRoom }});
+            if (creep == OK) {
+                Memory.creepCount++;
+                logSpawn(role, name, this.room.name);
+            }
+            return creep;
         }
     };
