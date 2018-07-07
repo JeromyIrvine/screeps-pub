@@ -33,10 +33,10 @@ var roleCombatEngineer = {
 			if (targets.length > 0) {
 				let target = creep.pos.findClosestByPath(targets);
 				if (!target) { //TODO: Figure out why we get an invalid target for this sometimes!
-					target = targets[0]; 
+					target = targets[0];
 				}
-				if (creep.repair(target) != ERR_NOT_IN_RANGE) {
-					creep.moveTo(target);
+				if (creep.repair(target) == ERR_NOT_IN_RANGE) {
+					creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
 				}
 			} else {
 				roleRepairer.run(creep);
