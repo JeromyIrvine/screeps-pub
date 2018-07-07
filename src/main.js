@@ -114,6 +114,12 @@ module.exports.loop = function () {
 function runRoom(spawn, hiring, bodies) {
     let creepsInRoom = spawn.room.find(FIND_MY_CREEPS);
 
+    if (Memory.skirmisher && spawn.room.energyAvailable >= 1000) {
+        if (spawn.spawnSkirmisher(Memory.skirmisher) == OK) {
+            delete Memory.skirmisher;
+        }
+    }
+
     let energyNeeded = 0;
     let bodyDesign = [];
     for (let i = 0; i < bodies.length; i++) {
@@ -234,6 +240,12 @@ StructureSpawn.prototype.spawnRemoteHarvester =
         }
     };
 
+StructureSpawn.prototype.queueSkirmisherFor = 
+    function (room) {
+        Memory.skirmisher = room;
+        console.log("Queue skirmisher for room " + room);
+    }
+    
 StructureSpawn.prototype.spawnSkirmisher = 
     function (workRoom) {
         let role = "skirmisher";
@@ -254,6 +266,7 @@ StructureSpawn.prototype.spawnSkirmisher =
                 Memory.creepCount++;
                 logSpawn(role, name, this.room.name);
             }
+            return creep;
         }
     };
 
