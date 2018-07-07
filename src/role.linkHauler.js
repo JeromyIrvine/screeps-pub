@@ -4,6 +4,13 @@ var roleLinkHauler = {
 
     /** @param {Creep} creep **/
     run: function (creep) {
+        
+		if (creep.memory.workRoom && creep.room.name != creep.memory.workRoom) {
+            let exit = creep.room.findExitTo(creep.memory.workRoom);
+			creep.moveTo(creep.pos.findClosestByPath(exit));
+			return;
+		}
+		
         if (creep.memory.collecting && creep.carry.energy == creep.carryCapacity) {
             creep.memory.collecting = false;
             //creep.say('📦 unload');

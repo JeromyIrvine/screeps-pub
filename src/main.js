@@ -52,11 +52,13 @@ module.exports.loop = function () {
         {
             room: "E44S1", 
             roster: [
-                { role: "harvester", targetPop: 2 },
+                { role: "harvester", targetPop: 1, memory: { sourceId: "5983006cb097071b4adc441f" } },
+                { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983006cb097071b4adc4420", linkId: "5b401d50c4315938e7f84dd2" } },
+                { role: "linkHauler", targetPop: 1, memory: { linkId: "5b40208f36223a3a08993428" } },
                 { role: "builder", targetPop: 2 },
-                { role: "upgrader", targetPop: 1 },
+                // { role: "upgrader", targetPop: 1 },
                 { role: "repairer", targetPop: 1 },
-                { role: "combatEngineer", targetPop: 1 }
+                // { role: "combatEngineer", targetPop: 1 }
             ]
         }
     ];
@@ -95,6 +97,7 @@ module.exports.loop = function () {
 
     linkBrain.transfer(Game.getObjectById("5b25dd2395593b53c85cadae"), Game.getObjectById("5b25ced2c20f5b53b28a2732"));
     linkBrain.transfer(Game.getObjectById("5b2fe7746ef2600f13dc2fb8"), Game.getObjectById("5b25ced2c20f5b53b28a2732"));
+    linkBrain.transfer(Game.getObjectById("5b401d50c4315938e7f84dd2"), Game.getObjectById("5b40208f36223a3a08993428"));
 
     for (let name in Game.creeps) {
         let creep = Game.creeps[name];
@@ -126,14 +129,17 @@ function runRoom(spawn, hiring, bodies) {
         
         if (ct.role == "remoteHarvester")
         {
-            if (_.sum(Game.creeps, c => c.memory.role == ct.role && c.memory.workRoom == ct.workRoom) < ct.targetPop)
+            if (_.sum(creepsInRoom, c => c.memory.role == ct.role) < ct.targetPop)
             {
                 spawn.spawnRemoteHarvester(spawn.room.name, ct.workRoom);
                 break;
             }
         } else if (ct.role == "linkHarvester") {
 
-            let harvesters = _.filter(Game.creeps, c => c.memory.role == ct.role && c.memory.sourceId == ct.memory.sourceId);
+            let harvesters = _.filter(creepsInRoom, c => 
+                c.memory.role == ct.role 
+                && c.memory.sourceId == ct.memory.sourceId);
+
             if ((harvesters.length == 0 || (harvesters.length == 1 && harvesters[0].ticksToLive <= 30)) && spawn.room.energyAvailable >= 600) {
                 let body = [WORK, WORK, WORK, WORK, WORK, CARRY, MOVE];
                 let name = `lha${Memory.creepCount}`;
@@ -141,13 +147,13 @@ function runRoom(spawn, hiring, bodies) {
                 let creep = spawn.spawnCreep(body, name, { memory });
                 if (creep == OK) {
                     Memory.creepCount++;
-                    console.log(`Spawned new Link Harvester creep: ${name}`);
+                    logSpawn("link harvester", name, spawn.room.name);
                     break;
                 }
             }
 
         } else if (ct.role == "linkHauler") {
-            let haulers = _.filter(Game.creeps, c => c.memory.role == ct.role);
+            let haulers = _.filter(creepsInRoom, c => c.memory.role == ct.role);
             if ((haulers.length < ct.targetPop || (haulers.length == ct.targetPop && _.any(haulers, h => h.ticksToLive <= 54)))
                 && spawn.room.energyAvailable >= 900)
             {
@@ -157,7 +163,7 @@ function runRoom(spawn, hiring, bodies) {
                 let creep = spawn.spawnCreep(body, name, { memory });
                 if (creep == OK) {
                     Memory.creepCount++;
-                    console.log(`Spawned new Link Hauler creep: ${name}`);
+                    logSpawn("hauler", name, spawn.room.name);
                     break;
                 }
             }
@@ -170,7 +176,7 @@ function runRoom(spawn, hiring, bodies) {
                 let creep = spawn.spawnCreep(bodyDesign, name, { memory });
                 if (creep == OK) {
                     Memory.creepCount++;
-                    console.log(`Spawned ${ct.role} '${name}' in room ${spawn.room.name}`);
+                    logSpawn(ct.role, name, spawn.room.name);
                     break;
                 }
             }
@@ -189,6 +195,10 @@ function runTower(tower) {
     if (target) {
         tower.attack(target);
     }
+}
+
+function logSpawn(role, name, room) {
+    console.log(`Spawned ${role} '${name}' in room ${room}`);
 }
 
 function garbageCollect() {
@@ -219,7 +229,7 @@ StructureSpawn.prototype.spawnRemoteHarvester =
             let creep = this.spawnCreep(bodyDesign, name, { memory: { role, homeRoom, workRoom } });
             if (creep == OK) {
                 Memory.creepCount++;
-                console.log(`Spawned new ${role} creep: ${name}`);
+                logSpawn(role, name, this.room.name);
             }
         }
     };
@@ -242,7 +252,7 @@ StructureSpawn.prototype.spawnSkirmisher =
             let creep = this.spawnCreep(bodyDesign, name, { memory: { role, workRoom } });
             if (creep == OK) {
                 Memory.creepCount++;
-                console.log(`Spawned new ${role} creep: ${name}`);
+                logSpawn(role, name, this.room.name);
             }
         }
     };
@@ -257,7 +267,7 @@ StructureSpawn.prototype.spawnClaimer =
             let creep = this.spawnCreep(bodyDesign, name, { memory: { role, workRoom } });
             if (creep == OK) {
                 Memory.creepCount++;
-                console.log(`Spawned new ${role} creep: ${name}`);
+                logSpawn(role, name, this.room.name);
             }
         }
     };
