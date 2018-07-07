@@ -55,10 +55,10 @@ module.exports.loop = function () {
                 { role: "harvester", targetPop: 1, memory: { sourceId: "5983006cb097071b4adc441f" } },
                 { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983006cb097071b4adc4420", linkId: "5b401d50c4315938e7f84dd2" } },
                 { role: "linkHauler", targetPop: 1, memory: { linkId: "5b40208f36223a3a08993428" } },
-                { role: "builder", targetPop: 2 },
-                // { role: "upgrader", targetPop: 1 },
+                { role: "builder", targetPop: 1 },
+                { role: "upgrader", targetPop: 1 },
                 { role: "repairer", targetPop: 1 },
-                // { role: "combatEngineer", targetPop: 1 }
+                { role: "combatEngineer", targetPop: 1 }
             ]
         }
     ];
@@ -129,7 +129,7 @@ function runRoom(spawn, hiring, bodies) {
         
         if (ct.role == "remoteHarvester")
         {
-            if (_.sum(creepsInRoom, c => c.memory.role == ct.role) < ct.targetPop)
+            if (_.sum(Game.creeps, c => c.memory.role == ct.role && c.memory.workRoom == ct.workRoom) < ct.targetPop)
             {
                 spawn.spawnRemoteHarvester(spawn.room.name, ct.workRoom);
                 break;
