@@ -56,7 +56,7 @@ module.exports.loop = function () {
             roster: [
                 { role: "harvester", targetPop: 1, memory: { sourceId: "5983006cb097071b4adc441f" } },
                 { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983006cb097071b4adc4420", linkId: "5b401d50c4315938e7f84dd2" } },
-                { role: "linkHauler", targetPop: 1, memory: { linkId: "5b40208f36223a3a08993428" } },
+                { role: "linkHauler", targetPop: 2, memory: { linkId: "5b40208f36223a3a08993428" } },
                 { role: "builder", targetPop: 1 },
                 { role: "upgrader", targetPop: 2 },
                 { role: "repairer", targetPop: 1 },
@@ -163,12 +163,11 @@ function runRoom(spawn, hiring, bodies) {
         } else if (ct.role == "linkHauler") {
             let haulers = _.filter(creepsInRoom, c => c.memory.role == ct.role);
             if ((haulers.length < ct.targetPop || (haulers.length == ct.targetPop && _.any(haulers, h => h.ticksToLive <= 54)))
-                && spawn.room.energyAvailable >= 900)
+                && spawn.room.energyAvailable >= roleLinkHauler.spawnCost)
             {
-                let body = [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
                 let name = `haul${Memory.creepCount}`;
                 let memory = Object.assign({ role: ct.role }, ct.memory);
-                let creep = spawn.spawnCreep(body, name, { memory });
+                let creep = spawn.spawnCreep(roleLinkHauler.body, name, { memory });
                 if (creep == OK) {
                     Memory.creepCount++;
                     logSpawn("hauler", name, spawn.room.name);

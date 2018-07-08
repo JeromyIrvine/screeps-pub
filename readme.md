@@ -48,7 +48,7 @@ change over time, as I finish items and think of new ideas.
 - [ ] Advanced worker management: upgraders, builders, and repairers are all *workers* who can be reassigned based on jobs available. New workers should only be built if the target population for a given job can't be filled.
 - [ ] Advanced tower logic: repair and heal **don't let towers repair ramparts until they've been maxed by workers**
 - [ ] **With link harvester in place, other creeps should not work that source.**
-- [ ] Haulers should only unload from the link when it has >= 100, for efficiency.
+- [x] Haulers should only unload from the link when it has >= 100, for efficiency.
 - [ ] All workers should scavenge nearby drops when looking for energy. RH code can be generalized.
 
 ## Roles

@@ -1,6 +1,14 @@
 /// <reference path="../ref/screeps.d.ts" />
 
 var roleLinkHauler = {
+    
+    body: [
+        CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+        CARRY, CARRY, CARRY, CARRY, CARRY,
+        MOVE, MOVE, MOVE, MOVE, MOVE
+    ],
+
+    spawnCost: 1000,
 
     /** @param {Creep} creep **/
     run: function (creep) {
@@ -52,6 +60,16 @@ function harvestEnergy(creep, link) {
             if (creep.pickup(target) == ERR_NOT_IN_RANGE) {
                 Memory["dropped" + target.id] = creep.id; // who's going to pick it up
                 creep.moveTo(target);
+            }
+            return;
+        }
+
+        // Distribute from storage if needed and available.
+        if (creep.room.energyCapacityAvailable - creep.room.energyAvailable > 200
+            && creep.room.storage.store.energy > 5000)
+        {
+            if (creep.withdraw(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(creep.room.storage, { visualizePathStyle: { stroke: '#ff0000' } });
             }
             return;
         }
