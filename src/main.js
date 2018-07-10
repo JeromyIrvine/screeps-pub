@@ -56,7 +56,7 @@ module.exports.loop = function () {
             roster: [
                 { role: "harvester", targetPop: 1, memory: { sourceId: "5983006cb097071b4adc441f" } },
                 { role: "linkHarvester", targetPop: 1, memory: { sourceId: "5983006cb097071b4adc4420", linkId: "5b401d50c4315938e7f84dd2" } },
-                { role: "linkHauler", targetPop: 2, memory: { linkId: "5b44c498a7bc280f8c55814b" } },
+                { role: "linkHauler", targetPop: 1, memory: { linkId: "5b44c498a7bc280f8c55814b" } },
                 { role: "builder", targetPop: 1 },
                 { role: "upgrader", targetPop: 2 },
                 { role: "repairer", targetPop: 1 },
