@@ -38,7 +38,8 @@ task `grunt screeps` to upload your `/src` folder to the Screeps server.
 This is a list of things that I plan to add to my script. This will grow and
 change over time, as I finish items and think of new ideas.
 
-- [ ] If no creeps in room, need a way to restart with whatever energy is available
+- [ ] **If no creeps in room, need a way to restart with whatever energy is available**
+- [ ] Add multi-spawn logic
 - [x] Add Skirmisher unit that can hunt Invaders in remote rooms.
 - [ ] Figure out how to detect if an Invader is in a work room and spawn a Skirmisher in response.
 - [ ] Spawn logic should honor priority before available energy. Lower-cost items are jumping the list, currently.

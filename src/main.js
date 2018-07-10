@@ -65,16 +65,16 @@ module.exports.loop = function () {
         }
     ];
 
+    // Max body size is 50 parts. This is our biggest worker possible.
     var bodies = [
-        { energy: 4000, body: [
+        { energy: 2750, body: [
             WORK, WORK, WORK, WORK, WORK,
-            WORK, WORK, WORK, WORK, WORK,
             CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, 
             CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, 
-            CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, 
+            CARRY, CARRY, CARRY,
             MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, 
-            MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, 
-            MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE
+            MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE,
+            MOVE, MOVE
         ] },
         { energy: 2300, body: [
             WORK, WORK, WORK, WORK, WORK, 
@@ -109,7 +109,7 @@ module.exports.loop = function () {
 
     linkBrain.transfer(Game.getObjectById("5b25dd2395593b53c85cadae"), Game.getObjectById("5b25ced2c20f5b53b28a2732"));
     linkBrain.transfer(Game.getObjectById("5b2fe7746ef2600f13dc2fb8"), Game.getObjectById("5b25ced2c20f5b53b28a2732"));
-    linkBrain.transfer(Game.getObjectById("5b401d50c4315938e7f84dd2"), Game.getObjectById("5b40208f36223a3a08993428"));
+    linkBrain.transfer(Game.getObjectById("5b401d50c4315938e7f84dd2"), Game.getObjectById("5b44c498a7bc280f8c55814b"));
 
     for (let name in Game.creeps) {
         let creep = Game.creeps[name];
