@@ -65,8 +65,7 @@ function harvestEnergy(creep, link) {
         }
 
         // Distribute from storage if needed and available.
-        if (creep.room.energyCapacityAvailable - creep.room.energyAvailable > 200
-            && creep.room.storage.store.energy > 5000)
+        if (creep.room.energyCapacityAvailable - creep.room.energyAvailable > 200)
         {
             if (creep.withdraw(creep.room.storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(creep.room.storage, { visualizePathStyle: { stroke: '#ff0000' } });
